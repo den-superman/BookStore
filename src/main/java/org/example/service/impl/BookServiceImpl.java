@@ -1,6 +1,8 @@
 package org.example.service.impl;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 import org.example.model.Book;
 import org.example.repository.BookRepository;
 import org.example.service.BookService;
@@ -17,10 +19,15 @@ public class BookServiceImpl implements BookService {
     }
 
     public Book save(Book book) {
+        book.setIsbn("isbn" + new Random().nextInt(1000));
         return bookRepository.save(book);
     }
 
     public List<Book> findAll() {
         return bookRepository.findAll();
+    }
+
+    public Optional<Book> findById(Long id) {
+        return Optional.ofNullable(bookRepository.getById(id));
     }
 }

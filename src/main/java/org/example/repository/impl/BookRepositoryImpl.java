@@ -41,4 +41,10 @@ public class BookRepositoryImpl implements BookRepository {
             throw new RuntimeException("Can't get all books from db", e);
         }
     }
+
+    public Book getById(Long id) {
+        try (Session session = factory.openSession()) {
+            return session.get(Book.class, id);
+        }
+    }
 }
