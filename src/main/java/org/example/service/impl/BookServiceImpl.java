@@ -1,7 +1,6 @@
 package org.example.service.impl;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.BookDto;
 import org.example.dto.CreateBookRequestDto;
@@ -19,14 +18,14 @@ public class BookServiceImpl implements BookService {
     private final BookMapper bookMapper;
 
     public BookDto save(CreateBookRequestDto createBookRequestDto) {
-        Book savedBook = bookRepository.save(bookMapper.toEntity(createBookRequestDto));
-        return bookMapper.toDto(savedBook);
+        Book book = bookRepository.save(bookMapper.toEntity(createBookRequestDto));
+        return bookMapper.toDto(book);
     }
 
     public List<BookDto> findAll() {
         return bookRepository.findAll().stream()
                 .map(bookMapper::toDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public BookDto getById(Long id) {
