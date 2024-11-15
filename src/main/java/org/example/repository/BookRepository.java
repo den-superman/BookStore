@@ -1,6 +1,7 @@
 package org.example.repository;
 
 import java.util.List;
+import java.util.Optional;
 import org.example.model.Book;
 
 public interface BookRepository {
@@ -8,5 +9,5 @@ public interface BookRepository {
 
     List<Book> findAll();
 
-    Book getById(Long id);
+    Optional<Book> findById(Long id);
 }

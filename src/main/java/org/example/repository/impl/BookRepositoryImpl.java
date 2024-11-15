@@ -1,6 +1,7 @@
 package org.example.repository.impl;
 
 import java.util.List;
+import java.util.Optional;
 import org.example.model.Book;
 import org.example.repository.BookRepository;
 import org.hibernate.Session;
@@ -37,14 +38,12 @@ public class BookRepositoryImpl implements BookRepository {
         try (Session session = factory.openSession()) {
             return session.createQuery("from " + Book.class.getSimpleName(), Book.class)
                     .getResultList();
-        } catch (Exception e) {
-            throw new RuntimeException("Can't get all books from db", e);
         }
     }
 
-    public Book getById(Long id) {
+    public Optional<Book> findById(Long id) {
         try (Session session = factory.openSession()) {
-            return session.get(Book.class, id);
+            return Optional.ofNullable(session.get(Book.class, id));
         }
     }
 }
