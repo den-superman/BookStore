@@ -2,7 +2,7 @@ package org.example.repository.impl;
 
 import java.util.List;
 import java.util.Optional;
-import org.example.exception.RepositoryException;
+import org.example.exception.DataProcessingException;
 import org.example.model.Book;
 import org.example.repository.BookRepository;
 import org.hibernate.Session;
@@ -31,7 +31,7 @@ public class BookRepositoryImpl implements BookRepository {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new RepositoryException("Can't insert new book " + book, e);
+            throw new DataProcessingException("Can't insert new book " + book, e);
         }
     }
 
@@ -39,7 +39,7 @@ public class BookRepositoryImpl implements BookRepository {
         try (Session session = factory.openSession()) {
             return session.createQuery("from Book", Book.class).getResultList();
         } catch (Exception e) {
-            throw new RepositoryException(
+            throw new DataProcessingException(
                     "Something went wrong during acquiring all books from repo", e);
         }
     }
@@ -48,7 +48,7 @@ public class BookRepositoryImpl implements BookRepository {
         try (Session session = factory.openSession()) {
             return Optional.ofNullable(session.get(Book.class, id));
         } catch (Exception e) {
-            throw new RepositoryException(
+            throw new DataProcessingException(
                     "Something went wrong during acquiring book with id %s from repo".formatted(id),
                     e);
         }
